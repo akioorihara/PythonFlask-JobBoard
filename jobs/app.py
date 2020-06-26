@@ -1,6 +1,6 @@
-import flask import Flask, render_template
+from flask import Flask, render_template
 
-app = Flash(_name_)
+app = Flask(__name__)
 
 @app.route('/')
 @app.route('/jobs')
