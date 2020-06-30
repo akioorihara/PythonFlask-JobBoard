@@ -16,13 +16,16 @@ def execute_sql(sql, values=(), commit=False, single=False):
     if commit == True: 
         results = connection.commit()
     else: 
-        results = curser.fetchall() if single else curser.fetchall()
+        results = curser.fetchone() if single else curser.fetchall()
 
     curser.close()
     return results
 
+@app.teardown_appcontext
 def close_connection(exception):
-    connection = getattr()
+    connection = getattr(g, '_connection', None)
+    if connection is not None:
+        connection.close()
 
 app = Flask(__name__)
 
