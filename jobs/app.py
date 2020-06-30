@@ -10,7 +10,20 @@ def open_connection():
     connection.row_factory = sqlite3.Row
     return connection
 
-    
+def execute_sql(sql, values=(), commit=False, single=False):
+    connection = open_connection()
+    curser = connection.execute(sql, values)
+    if commit == True: 
+        results = connection.commit()
+    else: 
+        results = curser.fetchall() if single else curser.fetchall()
+
+    curser.close()
+    return results
+
+def close_connection(exception):
+    connection = getattr()
+
 app = Flask(__name__)
 
 @app.route('/')
