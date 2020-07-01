@@ -15,11 +15,11 @@ def open_connection():
 def execute_sql(sql, values=(), commit=False, single=False):
     connection = open_connection()
     curser = connection.execute(sql, values)
-    if commit == True: 
+    if commit == True:
         results = connection.commit()
-    else: 
+    else:
         results = curser.fetchone() if single else curser.fetchall()
-    
+
     curser.close()
     return results
 
@@ -34,4 +34,5 @@ def close_connection(exception):
 @app.route('/')
 @app.route('/jobs')
 def jobs():
-    return render_template('index.html')
+    jobs = execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name From job JOIN employer ON employer_id = job.employer_id')
+    return render_template('index.html', jobs=jobs)
