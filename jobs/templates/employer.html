@@ -17,22 +17,33 @@
 {{ show_jobs(jobs) }}
 
   <h2>Reviews</h2>
-    {# TODO: Remove comment and add for loop
-      {% %}
-    #}
+      {% for review in reviews %}
     <div class="box">
       <article class="media">
         <div class="media-left">
         </div>
         <div class="media-content">
+          {% for _ in range(0, review['rating']) %}
+          <spam class="fa fa-star checked"></spam>
+          {% endfor %}
           <div class="content">
+            <p>
+              <strong>
+                {{ review['title'] }}
+              </strong>
+              <small>
+                {{ review['status'] }}
+              </small>
+              <small>
+                {{ review['date'] }}
+              </small>
+              {{ review['review'] }}
+            </p>
           </div>
         </div>
       </article>
     </div>
-    {# TODO: Remove comment and end for loop
-      {% %}
-    #}
+      {% endfor %}
   <div class="columns">
     <div class="column">
       <a class="button is-info is-pulled-right">Create Review</a>
